@@ -88,6 +88,7 @@ import {
   DocSearchResult,
   DocSearchResultTreeDataProvider,
 } from "./espIdf/documentation/docResultsTreeView";
+import { NVSPartitionTable } from "./espIdf/nvs/partitionTable/panel";
 
 // Global variables shared by commands
 let workspaceRoot: vscode.Uri;
@@ -1550,6 +1551,21 @@ export async function activate(context: vscode.ExtensionContext) {
         wsServer.close();
       });
   });
+  registerIDFCommand(
+    "espIdf.webview.nvsPartitionEditor",
+    async (args?: vscode.Uri) => {
+      let filePath = args?.fsPath;
+      if (!args) {
+        try {
+        } catch (error) {
+          const errMsg = error.message
+            ? error.message
+            : "Error at NVS Partition Editor";
+        }
+      }
+      NVSPartitionTable.createOrShow(context.extensionPath, filePath);
+    }
+  );
   vscode.window.registerUriHandler({
     handleUri: async (uri: vscode.Uri) => {
       const query = uri.query.split("=");
