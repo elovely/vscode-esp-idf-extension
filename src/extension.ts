@@ -88,6 +88,7 @@ import {
   DocSearchResult,
   DocSearchResultTreeDataProvider,
 } from "./espIdf/documentation/docResultsTreeView";
+import del from "del";
 
 // Global variables shared by commands
 let workspaceRoot: vscode.Uri;
@@ -400,6 +401,29 @@ export async function activate(context: vscode.ExtensionContext) {
       } catch (error) {
         Logger.errorNotify(error.message, error);
       }
+    });
+  });
+
+  registerIDFCommand("espIdf.fullClean", () => {
+    PreCheck.perform([openFolderCheck], async () => {
+      const buildDir = path.join(workspaceRoot.fsPath, "build");
+      const buildDirExists = await utils.dirExistPromise(buildDir);
+      if (!buildDirExists) {
+        Logger.infoNotify(`Directory ${buildDir} does not exists.`);
+        return;
+      }
+      const cmakeCacheFile = path.join(buildDir, "CMakeCache.txt");
+      const doesCmakeCacheExists = utils.canAccessFile(
+        cmakeCacheFile,
+        constants.R_OK
+      );
+      if (!doesCmakeCacheExists) {
+        Logger.infoNotify(
+          `Directory ${buildDir} doesn't seem to be a CMake build directory or is empty.`
+        );
+        return;
+      }
+      await del(buildDir, { force: true });
     });
   });
 
@@ -1659,14 +1683,15 @@ function creatCmdsStatusBarItems() {
     "$(plug)",
     "ESP-IDF Select device port",
     "espIdf.selectPort",
-    100
+    101
   );
   createStatusBarItem(
     "$(gear)",
     "ESP-IDF Launch GUI Configuration tool",
     "menuconfig.start",
-    99
+    100
   );
+  createStatusBarItem("$(trash)", "ESP-IDF Full Clean", "espIdf.fullClean", 99);
   createStatusBarItem(
     "$(database)",
     "ESP-IDF Build project",

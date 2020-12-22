@@ -57,6 +57,7 @@
     "onCommand:espIdf.cleanProject",
     "onCommand:espIdf.erase_flash",
     "onCommand:espIdf.size",
+    "onCommand:espIdf.fullClean",
     "onCommand:espIdf.apptrace",
     "onCommand:espIdf.heaptrace",
     "onCommand:espIdf.openOCDCommand",
@@ -230,6 +231,11 @@
         "command": "espIdf.createFiles",
         "key": "ctrl+e c",
         "mac": "cmd+e c"
+      },
+      {
+        "command": "espIdf.fullClean",
+        "key": "ctrl+e f",
+        "mac": "cmd+e f"
       },
       {
         "command": "espIdf.buildDevice",
@@ -707,6 +713,10 @@
       {
         "command": "espIdf.getEspMdf",
         "title": "%espIdf.getEspMdf.title%"
+      },
+      {
+        "command": "espIdf.fullClean",
+        "title": "%espIdf.fullClean.title%"
       }
     ],
     "breakpoints": [
