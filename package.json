@@ -74,6 +74,7 @@
     "onCommand:esp.rainmaker.backend.sync",
     "onCommand:espIdf.getEspAdf",
     "onCommand:espIdf.getEspMdf",
+    "onCommand:espIdf.doctorCommand",
     "onView:idfAppTracer",
     "onView:idfAppTraceArchive",
     "onView:espRainmaker",
@@ -707,6 +708,10 @@
       {
         "command": "espIdf.getEspMdf",
         "title": "%espIdf.getEspMdf.title%"
+      },
+      {
+        "command": "espIdf.doctorCommand",
+        "title": "%espIdf.doctorCommand.title%"
       }
     ],
     "breakpoints": [

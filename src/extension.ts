@@ -88,6 +88,7 @@ import {
   DocSearchResult,
   DocSearchResultTreeDataProvider,
 } from "./espIdf/documentation/docResultsTreeView";
+import { generateConfigurationReport } from "./support/doctor";
 
 // Global variables shared by commands
 let workspaceRoot: vscode.Uri;
@@ -1173,6 +1174,10 @@ export async function activate(context: vscode.ExtensionContext) {
     PreCheck.perform([openFolderCheck], () => {
       appTraceArchiveTreeDataProvider.populateArchiveTree();
     });
+  });
+
+  registerIDFCommand("espIdf.doctorCommand", async () => {
+    await generateConfigurationReport(context);
   });
 
   registerIDFCommand(
